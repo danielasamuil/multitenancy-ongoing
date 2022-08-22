@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @ConfigurationPropertiesScan
-//@SpringBootApplication
+@SpringBootApplication
 public class MultiTenancyApplication {
 
   public static void main(String[] args) {

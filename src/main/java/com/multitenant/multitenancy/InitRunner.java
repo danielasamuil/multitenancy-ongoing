@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import javax.annotation.PostConstruct;
 
 @ConfigurationPropertiesScan
-@SpringBootApplication
+//@SpringBootApplication
 @RequiredArgsConstructor
 public class InitRunner {
 
