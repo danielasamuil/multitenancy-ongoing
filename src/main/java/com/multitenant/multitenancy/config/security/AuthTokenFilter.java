@@ -35,7 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     String tenantUUID = request.getHeader(TENANT_REQUEST_HEADER);
     if (tenantUUID == null) {
-      response.getWriter().write(TENANT_REQUEST_HEADER + "not present in the Request Header");
+      //response.getWriter().write(TENANT_REQUEST_HEADER + "not present in the Request Header");
       response.setStatus(400);
     }
 

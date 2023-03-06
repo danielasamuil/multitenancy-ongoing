@@ -49,11 +49,13 @@ public class AuthService {
                 .schema(tenantPoolService.takeTenant())
                 .build();
 
+        Tenant tenant1 = tenantRepo.save(tenant);
+
         User user = User.builder()
                 .username(signUpRequest.getUsername())
                 .password(encoder.encode(signUpRequest.getPassword()))
                 .email(signUpRequest.getEmail())
-                .tenantID(tenant.getId())
+                .tenantID(tenant1.getId())
                 .build();
 
         Set<String> rolesStr = signUpRequest.getRoles();
@@ -72,7 +74,6 @@ public class AuthService {
         }
 
         user.setRoles(roles);
-        userRepository.save(user);
-        tenantRepo.save(tenant);
+        User user1 = userRepository.save(user);
     }
 }

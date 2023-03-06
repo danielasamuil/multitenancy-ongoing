@@ -48,6 +48,10 @@ public class UserDetailsImpl implements UserDetails {
         authorities);
   }
 
+  public List<User> findAll(UserRepository userRepository){
+    return userRepository.findAll();
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
