@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,8 +31,12 @@ public class UserService {
 
     public List<UserDTO> findAll() {
 
+        List<UserDTO> users = userRepository.findAll().stream().map(
+                        userMapper::toDTO)
+                .collect(toList());
+
         return userRepository.findAll().stream().map(
-                        userMapper::toDto)
+                        userMapper::toDTO)
                 .collect(toList());
     }
 
@@ -54,13 +59,14 @@ public class UserService {
 
         roles.add(defaultRole);
 
-        User user = userMapper.fromDto(userDTO);
+        User user = userMapper.fromDTO(userDTO);
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoles(roles);
+        user.setUsername(userDTO.getUsername());
 
-        return userMapper.toDto(userRepository.save(user));
+        return userMapper.toDTO(userRepository.save(user));
     }
 
     public UserDTO update(Integer id, UserDTO userDTO) {
@@ -69,8 +75,9 @@ public class UserService {
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(encoder.encode(userDTO.getPassword()));
+        user.setUsername(userDTO.getUsername());
 
-        return userMapper.toDto(
+        return userMapper.toDTO(
                 userRepository.save(user)
         );
     }

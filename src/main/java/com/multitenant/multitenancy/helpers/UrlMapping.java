@@ -8,4 +8,6 @@ public class UrlMapping {
 
     public static final String ENTITY = "/{id}";
     public static final String USERS = API_PATH + "/users";
+    public static final String STAFF = API_PATH + "/staff";
+    public static final String GYM = API_PATH + "/gyms";
 }

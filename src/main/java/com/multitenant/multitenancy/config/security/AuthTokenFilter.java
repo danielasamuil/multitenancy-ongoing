@@ -1,5 +1,6 @@
 package com.multitenant.multitenancy.config.security;
 
+import com.multitenant.multitenancy.config.multitenancy.TenantConnectionProvider;
 import com.multitenant.multitenancy.config.multitenancy.TenantContext;
 import com.multitenant.multitenancy.meta.user.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
@@ -18,16 +19,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 
 @RequiredArgsConstructor
 @Log4j2
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
-  public static final String TENANT_REQUEST_HEADER = "X-TenantID";
+  public static final String TENANT_REQUEST_HEADER = "XTenantID";
 
-  private JwtUtils jwtUtils;
+  private final JwtUtils jwtUtils;
 
-  private UserDetailsServiceImpl userDetailsService;
+  private final UserDetailsServiceImpl userDetailsService;
+
+  private final TenantConnectionProvider tenantConnectionProvider;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -50,6 +54,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Connection connection = tenantConnectionProvider.getConnection(tenantUUID);
 
         TenantContext.setCurrentTenant(tenantUUID);
       }

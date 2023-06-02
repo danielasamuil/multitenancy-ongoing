@@ -7,3 +7,5 @@ create table if not exists book
         constraint tenant_tenant_id_key
         unique
 );
+
+drop table book;

@@ -33,9 +33,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
   private final UserDetailsService userDetailsService;
   private final AuthEntryPointJwt unauthorizedHandler;
 
-  public AuthTokenFilter authenticationJwtTokenFilter() {
-    return new AuthTokenFilter();
-  }
+  private final AuthTokenFilter authenticationJwtTokenFilter;
 
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -62,7 +60,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/test/**").permitAll()
         .anyRequest().authenticated();
 
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
   }
 
 }

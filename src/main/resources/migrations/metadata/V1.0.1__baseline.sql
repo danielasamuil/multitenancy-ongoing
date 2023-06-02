@@ -36,8 +36,6 @@ insert into role (id, name)
 values (1, 'ADMIN');
 insert into role (id, name)
 values (2, 'HELP_DESK');
-insert into role (id, name)
-values (3, 'PERSONAL_TRAINER');
 
 create table "user"
 (
