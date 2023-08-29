@@ -51,6 +51,7 @@ public class AuthController {
                         .username(userDetails.getUsername())
                         .email(userDetails.getEmail())
                         .roles(roles)
+                        .tenantID(userDetails.getTenantID())
                         .build()
         );
     }

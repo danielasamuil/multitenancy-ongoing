@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 public class Staff {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue
   private Integer id;
 
   @ManyToMany(fetch=FetchType.EAGER)

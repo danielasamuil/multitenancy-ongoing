@@ -1,5 +1,7 @@
 package com.multitenant.multitenancy.meta.user;
 
+import com.multitenant.multitenancy.meta.tenant.Tenant;
+import com.multitenant.multitenancy.meta.tenant.TenantState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

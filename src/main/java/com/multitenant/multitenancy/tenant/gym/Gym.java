@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 public class Gym {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
 
     @Column(nullable = false, length = 50)

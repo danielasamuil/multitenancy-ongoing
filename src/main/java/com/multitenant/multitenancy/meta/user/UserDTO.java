@@ -20,6 +20,7 @@ public class UserDTO {
     private String password;
     private String username;
     private List<Role> roles;
+    private String tenantId;
 }
 
 

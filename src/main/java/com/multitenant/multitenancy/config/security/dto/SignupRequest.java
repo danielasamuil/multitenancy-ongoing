@@ -8,6 +8,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class SignupRequest {
 
     private String username;

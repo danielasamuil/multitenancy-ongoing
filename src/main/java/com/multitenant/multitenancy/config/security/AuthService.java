@@ -20,7 +20,7 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 @Transactional
-public class AuthService {
+public class  AuthService {
 
     private final UserRepository userRepository;
 

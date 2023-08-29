@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GymDTO {
+    private Integer id;
     private String address;
     private String manager;
 }

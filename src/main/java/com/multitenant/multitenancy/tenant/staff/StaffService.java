@@ -1,5 +1,7 @@
 package com.multitenant.multitenancy.tenant.staff;
 
+import com.multitenant.multitenancy.meta.user.ERole;
+import com.multitenant.multitenancy.meta.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class StaffService {
     private final StaffRepository staffRepository;
 
     private final StaffMapper staffMapper;
+
+    private final StaffRoleRepository staffRoleRepository;
 
     public Staff findById(Integer id) {
         return staffRepository.findById(id)
@@ -44,12 +48,28 @@ public class StaffService {
     }
 
     public StaffDTO create(StaffDTO staffDTO) {
+        Set<StaffRole> roles = new HashSet<>();
+
+        StaffRole defaultRole = new StaffRole();
+
+        if(staffDTO.getRoles() == null || staffDTO.getRoles().get(0).equals("TRAINER")) {
+            defaultRole = staffRoleRepository.findByName(StaffERole.TRAINER)
+                    .orElseThrow(() -> new RuntimeException("Cannot find TRAINER role"));
+        } else if(staffDTO.getRoles().get(0).equals("NUTRITIONIST")){
+            defaultRole = staffRoleRepository.findByName(StaffERole.NUTRITIONIST)
+                    .orElseThrow(() -> new RuntimeException("Cannot find NUTRITIONIST role"));
+        } else if(staffDTO.getRoles().get(0).equals("MASSAGE_THERAPIST")){
+            defaultRole = staffRoleRepository.findByName(StaffERole.MASSAGE_THERAPIST)
+                    .orElseThrow(() -> new RuntimeException("Cannot find MASSAGE_THERAPIST role"));
+        }
+
+        roles.add(defaultRole);
 
         Staff staff = staffMapper.fromDTO(staffDTO);
 
-        staff.setRoles(new HashSet<>(staffDTO.getRoles()));
         staff.setAddress(staffDTO.getAddress());
         staff.setName(staffDTO.getName());
+        staff.setRoles(roles);
 
         return staffMapper.toDTO(staffRepository.save(staff));
     }
@@ -59,7 +79,7 @@ public class StaffService {
         Staff staff = findById(id);
 
         staff.setAddress(staffDTO.getAddress());
-        staff.setRoles(staffDTO.getRoles().stream().collect(Collectors.toSet()));
+        staff.setName(staffDTO.getName());
 
         return staffMapper.toDTO(
                 staffRepository.save(staff)
